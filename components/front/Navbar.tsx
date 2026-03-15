@@ -9,11 +9,11 @@ import { Menu, X, MessageCircle }  from 'lucide-react'
 import { ThemeToggle }             from '../ui/ThemeToggle'
 
 const NAV_LINKS = [
-  { label: 'Accueil',   href: '/'               },
-  { label: 'Services',  href: '/front/services'  },
-  { label: 'Portfolio', href: '/front/galerie'   },
-  { label: 'Processus', href: '/#processus'      },
-  { label: 'Contact',   href: '/front/contact'   },
+  { label: 'Accueil',   href: '/'                  },
+  { label: 'Services',  href: '/front/services'     },
+  { label: 'Portfolio', href: '/front/galerie'      },
+  { label: 'Processus', href: '/front/processus'    },
+  { label: 'Contact',   href: '/front/contact'      },
 ]
 
 function isActive(pathname: string, href: string) {

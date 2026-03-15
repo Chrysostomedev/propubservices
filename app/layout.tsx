@@ -1,8 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Syne, DM_Sans } from 'next/font/google'
 import './globals.css'
-import { Navbar } from '../components/front/Navbar'
-import { Footer } from '../components/front/Footer'
 /* ── Fonts ──────────────────────────────────────────────────────── */
 const syne = Syne({
   subsets: ['latin'],
@@ -60,9 +58,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body>
-        <Navbar />
-        <main style={{ paddingTop: 68 }}>{children}</main>
-        <Footer />
+        {children}
       </body>
     </html>
   )

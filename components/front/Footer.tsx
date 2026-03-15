@@ -37,7 +37,7 @@ function GoldLine() {
 /* ── Footer ─────────────────────────────────────────────────────── */
 export function Footer() {
   return (
-    <footer style={{ background: '#09090D', paddingTop: 64 }}>
+    <footer style={{ background: 'var(--bg-base)', borderTop: '1px solid var(--border)', paddingTop: 64 }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
         <GoldLine />
 

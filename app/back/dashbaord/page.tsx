@@ -165,9 +165,9 @@ export default function DashboardPage() {
       </div>
 
       {/* KPI Cards */}
-      <div style={{
+      <div className="dash-stats" style={{
         display:             'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
+        gridTemplateColumns: 'repeat(5, 1fr)',
         gap:                 16,
         marginBottom:        32,
       }}>
@@ -179,9 +179,9 @@ export default function DashboardPage() {
       </div>
 
       {/* Graphiques */}
-      <div style={{
+      <div className="dash-charts" style={{
         display:             'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+        gridTemplateColumns: 'repeat(2, 1fr)',
         gap:                 20,
         marginBottom:        24,
       }}>
@@ -236,6 +236,16 @@ export default function DashboardPage() {
           </table>
         </div>
       )}
+
+      <style>{`
+        @media (max-width: 900px) {
+          .dash-stats  { grid-template-columns: repeat(2, 1fr) !important; }
+          .dash-charts { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 480px) {
+          .dash-stats  { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </div>
   )
 }

@@ -16,13 +16,13 @@
  * ─────────────────────────────────────────────────────────────────
  */
 
-import { HeroSection }             from '../components/front/HeroSection'
-// ✅ Après
-import { ServiceCard }   from '../components/front/ServiceCard'
-import { SERVICES_DATA } from '../components/front/services-data'
-import { ProcessSection }          from '../components/front/ProcessSection'
-import { PortfolioTeaser }         from '../components/front/PortfolioTeaser'
-import { CTABand }                 from '../components/front/CTABand'
+import { HeroSection }             from '../../components/front/HeroSection'
+import { ServiceCard }             from '../../components/front/ServiceCard'
+import { SERVICES_DATA }           from '../../components/front/services-data'
+import { ProcessSection }          from '../../components/front/ProcessSection'
+import { PortfolioTeaser }         from '../../components/front/PortfolioTeaser'
+import { CTABand }                 from '../../components/front/CTABand'
+import { Navbar }                  from '../../components/front/Navbar'
 
 /* ══════════════════════════════════════════════════════════════════
    SECTION WRAPPER RÉUTILISABLE
@@ -119,6 +119,8 @@ function SectionHeader({
 export default function LandingPage() {
   return (
     <>
+      <Navbar />
+      <main style={{ paddingTop: 68 }}>
       {/* ── 1. HERO ─────────────────────────────────────────────── */}
       <HeroSection/>
 
@@ -168,6 +170,8 @@ export default function LandingPage() {
 
       {/* ── 5. BANDE CTA FINALE ─────────────────────────────────── */}
       <CTABand/>
+      </main>
+     
     </>
   )
 }
