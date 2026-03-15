@@ -1,65 +1,138 @@
-import type { Metadata, Viewport } from 'next'
-import { Syne, DM_Sans } from 'next/font/google'
-import './globals.css'
+/* ═══════════════════════════════════════════════════════════════════
+   tokens.css — Design tokens Pro-Pub Service
+   Dark mode (défaut) + Light mode via [data-theme="light"]
+   Palette : bleu royal #2B2FD9 · blanc · or #E8B84B (accent léger)
+═══════════════════════════════════════════════════════════════════ */
 
-/* ── Fonts ──────────────────────────────────────────────────────── */
-const syne = Syne({
-  subsets: ['latin'],
-  variable: '--font-syne',
-  weight: ['400', '500', '600', '700', '800'],
-  display: 'swap',
-})
+/* ── DARK MODE (défaut) ─────────────────────────────────────────── */
+:root {
 
-const dmSans = DM_Sans({
-  subsets: ['latin'],
-  variable: '--font-dm',
-  weight: ['300', '400', '500', '600'],
-  style: ['normal', 'italic'],
-  display: 'swap',
-})
+  /* Fonds */
+  --bg-base:     #0C0C0F;
+  --bg-surface:  #0F0F14;
+  --bg-elevated: #16161D;
+  --bg-hover:    #1C1C25;
+  --bg-overlay:  rgba(12, 12, 15, 0.88);
 
-/* ── Metadata ───────────────────────────────────────────────────── */
-export const metadata: Metadata = {
-  title: {
-    default: 'Pro-Pub Service | Enseignes & Signalétique Abidjan',
-    template: '%s | Pro-Pub Service',
-  },
-  description:
-    'Spécialiste des enseignes 3D, façades décoratives, lettres LED, néon et habillage de commerces à Yopougon, Abidjan. Devis gratuit sous 48h.',
-  keywords: [
-    'enseigne 3D', 'façade décorative', 'lettre lumineuse LED', 'néon déco',
-    'Alucobond', 'signalétique', 'imprimerie', 'Abidjan', 'Yopougon',
-  ],
-  authors: [{ name: 'Pro-Pub Service' }],
-  openGraph: {
-    title: 'Pro-Pub Service | Enseignes & Signalétique Abidjan',
-    description: 'Donnez de l\'impact à votre commerce. Enseignes 3D, néon, LED, façades.',
-    locale: 'fr_CI',
-    type: 'website',
-  },
+  /* Texte principal — blanc légèrement chaud */
+  --cream:       #F4F6FF;
+  --cream-80:    rgba(244, 246, 255, 0.80);
+  --cream-55:    rgba(244, 246, 255, 0.55);
+  --cream-30:    rgba(244, 246, 255, 0.30);
+  --cream-12:    rgba(244, 246, 255, 0.12);
+
+  /* Bleu royal — accent principal */
+  --gold:        #3B40E8;
+  --gold-light:  #6366F1;
+  --gold-dim:    rgba(59, 64, 232, 0.45);
+  --gold-glow:   rgba(59, 64, 232, 0.14);
+  --gold-bg:     rgba(59, 64, 232, 0.10);
+  --gold-border: rgba(59, 64, 232, 0.28);
+
+  /* Or/jaune — accent secondaire discret */
+  --accent:        #E8B84B;
+  --accent-light:  #F0CC7A;
+  --accent-dim:    rgba(232, 184, 75, 0.40);
+  --accent-bg:     rgba(232, 184, 75, 0.08);
+  --accent-border: rgba(232, 184, 75, 0.20);
+
+  /* Bordures */
+  --border:        rgba(255, 255, 255, 0.07);
+  --border-md:     rgba(255, 255, 255, 0.13);
+  --border-strong: rgba(255, 255, 255, 0.22);
+
+  /* Sémantiques */
+  --green:        #22C55E;
+  --green-bg:     rgba(34, 197, 94, 0.08);
+  --green-border: rgba(34, 197, 94, 0.22);
+  --blue:         #60A5FA;
+  --blue-bg:      rgba(96, 165, 250, 0.08);
+  --blue-border:  rgba(96, 165, 250, 0.22);
+  --red:          #F87171;
+  --red-bg:       rgba(248, 113, 113, 0.08);
+  --red-border:   rgba(248, 113, 113, 0.22);
+  --warning:      #FBBF24;
+
+  /* Typographie */
+  --font-display: var(--font-syne), 'Syne', system-ui, sans-serif;
+  --font-body:    var(--font-dm), 'DM Sans', system-ui, sans-serif;
+
+  /* Border radius */
+  --r-xs:   4px;
+  --r-sm:   6px;
+  --r-md:   10px;
+  --r-lg:   14px;
+  --r-xl:   20px;
+  --r-2xl:  28px;
+  --r-full: 9999px;
+
+  /* Ombres */
+  --shadow-sm:          0 1px 3px rgba(0,0,0,0.4);
+  --shadow-md:          0 4px 16px rgba(0,0,0,0.5);
+  --shadow-lg:          0 8px 32px rgba(0,0,0,0.6);
+  --shadow-gold:        0 4px 24px rgba(59,64,232,0.20);
+  --shadow-gold-strong: 0 6px 32px rgba(59,64,232,0.35);
+
+  /* Transitions */
+  --t-fast: 120ms ease;
+  --t-med:  220ms ease;
+  --t-slow: 380ms ease;
+  --ease:   cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-export const viewport: Viewport = {
-  themeColor: '#0C0C0F',
-  width: 'device-width',
-  initialScale: 1,
-}
+/* ── LIGHT MODE ─────────────────────────────────────────────────── */
+[data-theme="light"] {
 
-/* ── Root Layout ────────────────────────────────────────────────── */
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <html
-      lang="fr"
-      className={`${syne.variable} ${dmSans.variable}`}
-      style={{ colorScheme: 'dark' }}
-    >
-      <body>
-        {children}
-      </body>
-    </html>
-  )
+  /* Fonds — blanc + sky blue très léger */
+  --bg-base:     #F0F4FF;
+  --bg-surface:  #FFFFFF;
+  --bg-elevated: #E8EEFF;
+  --bg-hover:    #DDE5FF;
+  --bg-overlay:  rgba(240, 244, 255, 0.92);
+
+  /* Texte principal — bleu nuit foncé */
+  --cream:       #0D1240;
+  --cream-80:    rgba(13, 18, 64, 0.80);
+  --cream-55:    rgba(13, 18, 64, 0.55);
+  --cream-30:    rgba(13, 18, 64, 0.30);
+  --cream-12:    rgba(13, 18, 64, 0.10);
+
+  /* Bleu royal — accent principal (identique) */
+  --gold:        #2B2FD9;
+  --gold-light:  #4F54E8;
+  --gold-dim:    rgba(43, 47, 217, 0.35);
+  --gold-glow:   rgba(43, 47, 217, 0.10);
+  --gold-bg:     rgba(43, 47, 217, 0.08);
+  --gold-border: rgba(43, 47, 217, 0.22);
+
+  /* Or/jaune — accent secondaire (identique) */
+  --accent:        #C9920A;
+  --accent-light:  #E8B84B;
+  --accent-dim:    rgba(201, 146, 10, 0.35);
+  --accent-bg:     rgba(201, 146, 10, 0.08);
+  --accent-border: rgba(201, 146, 10, 0.20);
+
+  /* Bordures */
+  --border:        rgba(43, 47, 217, 0.10);
+  --border-md:     rgba(43, 47, 217, 0.18);
+  --border-strong: rgba(43, 47, 217, 0.30);
+
+  /* Sémantiques */
+  --green:        #16A34A;
+  --green-bg:     rgba(22, 163, 74, 0.08);
+  --green-border: rgba(22, 163, 74, 0.22);
+  --blue:         #2563EB;
+  --blue-bg:      rgba(37, 99, 235, 0.08);
+  --blue-border:  rgba(37, 99, 235, 0.22);
+  --red:          #DC2626;
+  --red-bg:       rgba(220, 38, 38, 0.08);
+  --red-border:   rgba(220, 38, 38, 0.22);
+  --warning:      #D97706;
+
+  /* Ombres */
+  --shadow-sm:          0 1px 3px rgba(43,47,217,0.08);
+  --shadow-md:          0 4px 16px rgba(43,47,217,0.12);
+  --shadow-lg:          0 8px 32px rgba(43,47,217,0.16);
+  --shadow-gold:        0 4px 24px rgba(43,47,217,0.15);
+  --shadow-gold-strong: 0 6px 32px rgba(43,47,217,0.25);
 }

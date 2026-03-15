@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import { MapPin, Phone, MessageCircle, Instagram, Facebook, ArrowUpRight } from 'lucide-react'
 
@@ -15,18 +17,18 @@ const SERVICE_LINKS = [
 
 const NAV_LINKS = [
   { label: 'Accueil',   href: '/' },
-  { label: 'Services',  href: '/services' },
-  { label: 'Portfolio', href: '/portfolio' },
-  { label: 'Devis',     href: '/devis' },
-  { label: 'Contact',   href: '/contact' },
+  { label: 'Services',  href: '/front/services' },
+  { label: 'Galerie', href: '/front/galerie' },
+  { label: 'Devis',     href: '/front/devis' },
+  { label: 'Contact',   href: '/front/contact' },
 ]
 
-/* ── Séparateur or ──────────────────────────────────────────────── */
+/* ── Séparateur bleu ────────────────────────────────────────────── */
 function GoldLine() {
   return (
     <div style={{
       height: 1,
-      background: 'linear-gradient(90deg, transparent, var(--gold-border) 30%, var(--gold-border) 70%, transparent)',
+      background: 'linear-gradient(90deg, transparent, rgba(59,64,232,0.5) 30%, rgba(59,64,232,0.5) 70%, transparent)',
       margin: '0 0 48px',
     }}/>
   )
@@ -50,19 +52,21 @@ export function Footer() {
             {/* Logo */}
             <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
               <div style={{
-                width: 40, height: 40,
-                background: 'var(--bg-elevated)',
-                border: '1.5px solid var(--gold-border)',
-                borderRadius: 'var(--r-sm)',
+                width: 44, height: 44,
+                background: '#2B2FD9',
+                borderRadius: 'var(--r-md)',
                 display: 'flex', flexDirection: 'column',
-                alignItems: 'center', justifyContent: 'center', gap: 1,
+                alignItems: 'center', justifyContent: 'center',
+                gap: 0, flexShrink: 0,
+                boxShadow: '0 2px 12px rgba(43,47,217,0.35)',
               }}>
-                <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 9, color: 'var(--cream)', letterSpacing: 2 }}>PRO</span>
-                <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 9, color: 'var(--gold)', letterSpacing: 2 }}>PUB</span>
+                <span style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: 10, color: '#FFFFFF', letterSpacing: 1.5, lineHeight: 1.1 }}>PRO</span>
+                <span style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: 10, color: '#FFFFFF', letterSpacing: 1.5, lineHeight: 1.1 }}>PUB</span>
+                <span style={{ fontFamily: 'var(--font-body)', fontWeight: 700, fontSize: 6, color: '#E8B84B', letterSpacing: 1.5, textTransform: 'uppercase', lineHeight: 1.4 }}>SERVICES</span>
               </div>
               <div>
                 <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 14, color: 'var(--cream)', lineHeight: 1.2 }}>Pro-Pub Service</div>
-                <div style={{ fontSize: 10, color: 'var(--gold)', letterSpacing: 2.5, textTransform: 'uppercase', opacity: 0.75 }}>Yopougon · Abidjan</div>
+                <div style={{ fontSize: 10, color: 'var(--cream-30)', letterSpacing: 2, textTransform: 'uppercase' }}>Yopougon · Abidjan</div>
               </div>
             </Link>
 

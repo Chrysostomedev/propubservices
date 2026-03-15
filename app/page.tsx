@@ -1,65 +1,173 @@
-import Image from "next/image";
+/**
+ * app/(public)/page.tsx  —  Landing page Pro-Pub Service
+ * ─────────────────────────────────────────────────────────────────
+ * Route : /
+ *
+ * Composition de la page :
+ *  1. HeroSection     → plein écran, headline, CTA, stats
+ *  2. ServicesSection → grille des 8 services avec ServiceCard
+ *  3. ProcessSection  → 4 étapes du processus (consultation → pose)
+ *  4. PortfolioTeaser → aperçu portfolio (3 médias publiés)
+ *  5. CTABand         → bande de conversion finale avant le footer
+ *
+ * Tous les composants sont importés depuis /components.
+ * Les données de services sont statiques (SERVICES_DATA).
+ * Les médias du teaser viennent de Firebase (hook useMedia, published=true).
+ * ─────────────────────────────────────────────────────────────────
+ */
 
-export default function Home() {
+import { HeroSection }             from '../components/front/HeroSection'
+// ✅ Après
+import { ServiceCard }   from '../components/front/ServiceCard'
+import { SERVICES_DATA } from '../components/front/services-data'
+import { ProcessSection }          from '../components/front/ProcessSection'
+import { PortfolioTeaser }         from '../components/front/PortfolioTeaser'
+import { CTABand }                 from '../components/front/CTABand'
+
+/* ══════════════════════════════════════════════════════════════════
+   SECTION WRAPPER RÉUTILISABLE
+   Évite de répéter les mêmes styles de section sur chaque bloc
+══════════════════════════════════════════════════════════════════ */
+function Section({
+  id,
+  bg = 'var(--bg-base)',
+  children,
+  style,
+}: {
+  id?: string
+  bg?: string
+  children: React.ReactNode
+  style?:   React.CSSProperties
+}) {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <section
+      id={id}
+      style={{ background: bg, padding: '96px 0', ...style }}
+    >
+      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
+        {children}
+      </div>
+    </section>
+  )
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   SECTION HEADER — titre + sous-titre de section
+══════════════════════════════════════════════════════════════════ */
+function SectionHeader({
+  eyebrow,
+  title,
+  subtitle,
+  align = 'left',
+}: {
+  eyebrow:  string
+  title:    React.ReactNode
+  subtitle?: string
+  align?:  'left' | 'center'
+}) {
+  return (
+    <div style={{
+      marginBottom: 56,
+      textAlign:    align,
+      maxWidth:     align === 'center' ? 640 : 580,
+      margin:       align === 'center' ? '0 auto 56px' : '0 0 56px',
+    }}>
+      {/* Eyebrow — petit label au-dessus */}
+      <p style={{
+        fontFamily:    'var(--font-body)',
+        fontSize:      11,
+        fontWeight:    700,
+        color:         'var(--gold)',
+        letterSpacing: 2.5,
+        textTransform: 'uppercase',
+        marginBottom:  12,
+      }}>
+        {eyebrow}
+      </p>
+
+      {/* Titre principal */}
+      <h2 style={{
+        fontFamily:    'var(--font-display)',
+        fontSize:      'clamp(28px, 4.5vw, 48px)',
+        fontWeight:    900,
+        color:         'var(--cream)',
+        letterSpacing: -1.2,
+        lineHeight:    1.08,
+        marginBottom:  subtitle ? 16 : 0,
+      }}>
+        {title}
+      </h2>
+
+      {/* Sous-titre optionnel */}
+      {subtitle && (
+        <p style={{
+          fontFamily: 'var(--font-body)',
+          fontSize:   16,
+          lineHeight: 1.7,
+          color:      'var(--cream-55)',
+        }}>
+          {subtitle}
+        </p>
+      )}
     </div>
-  );
+  )
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   PAGE COMPONENT
+══════════════════════════════════════════════════════════════════ */
+export default function LandingPage() {
+  return (
+    <>
+      {/* ── 1. HERO ─────────────────────────────────────────────── */}
+      <HeroSection/>
+
+      {/* ── 2. SERVICES ─────────────────────────────────────────── */}
+      <Section id="services" bg="var(--bg-surface)">
+        <SectionHeader
+          eyebrow="Nos expertises"
+          title={
+            <>
+              Tout pour que votre commerce{' '}
+              <span style={{ color: 'var(--gold)' }}>se démarque</span>
+            </>
+          }
+          subtitle="De la conception à la pose, notre équipe couvre l'intégralité de votre projet signalétique et façadisme."
+        />
+
+        {/* Grille responsive de ServiceCards */}
+        <div style={{
+          display:             'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
+          gap:                 20,
+        }}>
+          {SERVICES_DATA.map((service, i) => (
+            <ServiceCard
+              key={service.slug}
+              service={service}
+              delay={i * 0.07}   // stagger progressif
+            />
+          ))}
+        </div>
+      </Section>
+
+      {/* ── 3. PROCESSUS ────────────────────────────────────────── */}
+      <ProcessSection/>
+
+      {/* ── 4. PORTFOLIO TEASER ─────────────────────────────────── */}
+      <Section id="portfolio" bg="var(--bg-surface)">
+        <SectionHeader
+          eyebrow="Nos réalisations"
+          title="Ce que nous avons créé"
+          subtitle="Quelques exemples de façades, enseignes et décorations réalisées à Abidjan."
+          align="center"
+        />
+        {/* Client component — charge les médias publiés depuis Firebase */}
+        <PortfolioTeaser/>
+      </Section>
+
+      {/* ── 5. BANDE CTA FINALE ─────────────────────────────────── */}
+      <CTABand/>
+    </>
+  )
 }
