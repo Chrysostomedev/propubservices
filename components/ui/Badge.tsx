@@ -65,7 +65,7 @@ export function Badge({ label, variant = 'neutral', size = 'md', dot = false, ic
 }
 
 /* ── OrderStatusBadge — helper prêt à l'emploi ───────────────────── */
-import type { OrderStatus } from '../../lib/types'
+type OrderStatus = 'pending' | 'confirmed' | 'in_progress' | 'done' | 'cancelled'
 
 const ORDER_STATUS: Record<OrderStatus, { label: string; variant: BadgeVariant }> = {
   pending:     { label: 'En attente',  variant: 'warning' },
